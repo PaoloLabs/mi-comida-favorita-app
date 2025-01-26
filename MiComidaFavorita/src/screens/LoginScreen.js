@@ -13,16 +13,38 @@ export default function LoginScreen({ navigation }) {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
+    // Validar un campo individual dinámicamente
+    const validateField = (field, value) => {
+        let error = '';
+
+        if (field === 'email') {
+            if (!value.trim()) {
+                error = 'El email es requerido';
+            } else if (!validateEmail(value)) {
+                error = 'Formato de email inválido';
+            }
+        }
+
+        if (field === 'password') {
+            if (!value.trim()) {
+                error = 'La contraseña es requerida';
+            }
+        }
+
+        setErrors((prev) => ({ ...prev, [field]: error }));
+    };
+
+    // Validar todo el formulario
     const validateLoginForm = () => {
         let formErrors = {};
 
-        if (!email) {
+        if (!email.trim()) {
             formErrors.email = 'El email es requerido';
         } else if (!validateEmail(email)) {
             formErrors.email = 'Formato de email inválido';
         }
 
-        if (!password) {
+        if (!password.trim()) {
             formErrors.password = 'La contraseña es requerida';
         }
 
@@ -50,6 +72,11 @@ export default function LoginScreen({ navigation }) {
         }
     };
 
+    // Validar si el formulario es válido
+    const isFormValid = () => {
+        return email.trim() && password.trim() && validateEmail(email);
+    };
+
     return (
         <View style={commonStyles.container}>
             <LoadingOverlay visible={isLoading} />
@@ -57,7 +84,10 @@ export default function LoginScreen({ navigation }) {
             <Input
                 placeholder="Email"
                 value={email}
-                onChangeText={setEmail}
+                onChangeText={(value) => {
+                    setEmail(value);
+                    validateField('email', value); // Validar dinámicamente
+                }}
                 autoCapitalize="none"
                 errorMessage={errors.email}
                 errorStyle={commonStyles.errorText}
@@ -65,7 +95,10 @@ export default function LoginScreen({ navigation }) {
             <Input
                 placeholder="Contraseña"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={(value) => {
+                    setPassword(value);
+                    validateField('password', value); // Validar dinámicamente
+                }}
                 secureTextEntry
                 errorMessage={errors.password}
                 errorStyle={commonStyles.errorText}
@@ -74,14 +107,14 @@ export default function LoginScreen({ navigation }) {
                 title="Iniciar Sesión"
                 onPress={handleLogin}
                 containerStyle={commonStyles.button}
-                disabled={isLoading}
+                disabled={!isFormValid() || isLoading} // Deshabilita el botón si el formulario no es válido o está cargando
             />
             <Button
                 title="Registrarse"
                 type="outline"
                 onPress={() => navigation.navigate('Register')}
                 containerStyle={commonStyles.button}
-                disabled={isLoading}
+                disabled={isLoading} // Deshabilita solo mientras está cargando
             />
         </View>
     );
