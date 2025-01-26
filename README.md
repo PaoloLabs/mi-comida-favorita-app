@@ -135,6 +135,10 @@ Una vez iniciada la app tienes un menu donde puedes escoger la plataforma que qu
 
 - Para el caso de imagenes no pudimos usar firebase/storage por que no es posible con el plan gratuito pero fue posible haciendo compresion de imagenes con firestore.
 
+## Demo
+
+https://github.com/user-attachments/assets/b961c1a9-fa01-4a97-8838-5f8286531692
+
 ## Capturas de Pantalla
 
 ### Pantalla de Inicio de Sesión
