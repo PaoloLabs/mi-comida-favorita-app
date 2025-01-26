@@ -13,7 +13,6 @@ export default function LoginScreen({ navigation }) {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
-    // Validar un campo individual dinámicamente
     const validateField = (field, value) => {
         let error = '';
 
@@ -34,7 +33,6 @@ export default function LoginScreen({ navigation }) {
         setErrors((prev) => ({ ...prev, [field]: error }));
     };
 
-    // Validar todo el formulario
     const validateLoginForm = () => {
         let formErrors = {};
 
@@ -72,7 +70,6 @@ export default function LoginScreen({ navigation }) {
         }
     };
 
-    // Validar si el formulario es válido
     const isFormValid = () => {
         return email.trim() && password.trim() && validateEmail(email);
     };
@@ -86,7 +83,7 @@ export default function LoginScreen({ navigation }) {
                 value={email}
                 onChangeText={(value) => {
                     setEmail(value);
-                    validateField('email', value); // Validar dinámicamente
+                    validateField('email', value);
                 }}
                 autoCapitalize="none"
                 errorMessage={errors.email}
@@ -97,7 +94,7 @@ export default function LoginScreen({ navigation }) {
                 value={password}
                 onChangeText={(value) => {
                     setPassword(value);
-                    validateField('password', value); // Validar dinámicamente
+                    validateField('password', value);
                 }}
                 secureTextEntry
                 errorMessage={errors.password}
@@ -107,14 +104,14 @@ export default function LoginScreen({ navigation }) {
                 title="Iniciar Sesión"
                 onPress={handleLogin}
                 containerStyle={commonStyles.button}
-                disabled={!isFormValid() || isLoading} // Deshabilita el botón si el formulario no es válido o está cargando
+                disabled={!isFormValid() || isLoading}
             />
             <Button
                 title="Registrarse"
                 type="outline"
                 onPress={() => navigation.navigate('Register')}
                 containerStyle={commonStyles.button}
-                disabled={isLoading} // Deshabilita solo mientras está cargando
+                disabled={isLoading}
             />
         </View>
     );
