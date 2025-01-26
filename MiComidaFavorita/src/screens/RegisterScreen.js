@@ -8,28 +8,56 @@ import { commonStyles } from '../styles/CommonStyles';
 import { LoadingOverlay } from '../components/LoadingOverlay';
 
 export default function RegisterScreen({ navigation }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
     const validateRegisterForm = () => {
         let formErrors = {};
 
-        if (!email) {
+        // Email validation
+        if (!formData.email) {
             formErrors.email = 'El email es requerido';
-        } else if (!validateEmail(email)) {
+        } else if (!validateEmail(formData.email)) {
             formErrors.email = 'Formato de email inválido';
         }
 
-        if (!password) {
+        // Password validation
+        if (!formData.password) {
             formErrors.password = 'La contraseña es requerida';
-        } else if (!validatePassword(password)) {
+        } else if (!validatePassword(formData.password)) {
             formErrors.password = 'La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y símbolos.';
+        }
+
+        // Password confirmation validation
+        if (!formData.confirmPassword) {
+            formErrors.confirmPassword = 'Por favor, confirma tu contraseña';
+        } else if (formData.password !== formData.confirmPassword) {
+            formErrors.confirmPassword = 'Las contraseñas no coinciden';
         }
 
         setErrors(formErrors);
         return Object.keys(formErrors).length === 0;
+    };
+
+    const handleInputChange = (field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+
+        // Clear specific field error when user starts typing
+        if (errors[field]) {
+            setErrors(prev => ({
+                ...prev,
+                [field]: ''
+            }));
+        }
     };
 
     const handleRegister = async () => {
@@ -37,26 +65,43 @@ export default function RegisterScreen({ navigation }) {
 
         setIsLoading(true);
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+            setIsLoading(false);
             Alert.alert(
                 'Registro Exitoso',
                 'Tu cuenta ha sido creada correctamente.',
                 [
-                    { text: 'OK', onPress: () => navigation.replace('Login') },
+                    { 
+                        text: 'OK', 
+                        onPress: () => navigation.replace('Login') 
+                    },
                 ]
             );
-        } catch (error) {
-            setIsLoading(false); // Asegura que el overlay se cierre antes del Alert
+        } catch (error) {            
+            let errorMessage = 'No se pudo crear la cuenta. Inténtalo de nuevo.';
+            
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    errorMessage = 'El correo electrónico ya está registrado';
+                    break;
+                case 'auth/invalid-email':
+                    errorMessage = 'Formato de correo electrónico inválido';
+                    break;
+                case 'auth/weak-password':
+                    errorMessage = 'La contraseña es demasiado débil';
+                    break;
+            }
+
+            setIsLoading(false);
+
             Alert.alert(
                 'Error de Registro',
-                'No se pudo crear la cuenta. Inténtalo de nuevo.',
+                errorMessage,
                 [
                     { text: 'OK', onPress: () => console.log('Alerta cerrada') },
                 ]
             );
-            console.log('Error:', error.message); // Depura el mensaje del error
-        } finally {
-            setIsLoading(false);
+            console.log('Error:', error.message);
         }
     };
 
@@ -64,28 +109,41 @@ export default function RegisterScreen({ navigation }) {
         <View style={commonStyles.container}>
             <LoadingOverlay visible={isLoading} />
             <Text h3 style={commonStyles.title}>Registro</Text>
+            
             <Input
                 placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
+                value={formData.email}
+                onChangeText={(value) => handleInputChange('email', value)}
                 autoCapitalize="none"
                 errorMessage={errors.email}
                 errorStyle={commonStyles.errorText}
             />
+
             <Input
                 placeholder="Contraseña"
-                value={password}
-                onChangeText={setPassword}
+                value={formData.password}
+                onChangeText={(value) => handleInputChange('password', value)}
                 secureTextEntry
                 errorMessage={errors.password}
                 errorStyle={commonStyles.errorText}
             />
+
+            <Input
+                placeholder="Confirmar Contraseña"
+                value={formData.confirmPassword}
+                onChangeText={(value) => handleInputChange('confirmPassword', value)}
+                secureTextEntry
+                errorMessage={errors.confirmPassword}
+                errorStyle={commonStyles.errorText}
+            />
+
             <Button
                 title="Registrar"
                 onPress={handleRegister}
                 containerStyle={commonStyles.button}
                 disabled={isLoading}
             />
+
             <Button
                 title="Volver"
                 type="outline"
