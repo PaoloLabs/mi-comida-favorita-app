@@ -18,7 +18,7 @@ export default function AppNavigator() {
                         false
                 }} />
                 <Stack.Screen name="Home" component={HomeScreen} options={{
-                    headerShown: true,
+                    headerShown: false,
                     title: 'Mi Perfil'
                 }} />
             </Stack.Navigator>
