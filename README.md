@@ -142,9 +142,9 @@ Una vez iniciada la app tienes un menu donde puedes escoger la plataforma que qu
 ![simulator_screenshot_DB02DB7B-5244-49D1-946B-A6B07A522E94](https://github.com/user-attachments/assets/a923fbd6-2052-4d3a-ac4e-f57b4b863b47)
 
 ### Pantalla de Registro
-![simulator_screenshot_2F3B72BB-F200-4499-9383-57363B384A7A](https://github.com/user-attachments/assets/bc12f49f-7ebe-4691-abd2-b8ac34f1cfb9)
-abs
-![simulator_screenshot_21A627C3-BDF3-4945-9562-301A3696A7B9](https://github.com/user-attachments/assets/669daccc-9fc8-4028-a816-0f2d1993db47)
+![simulator_screenshot_505BDDA4-C435-485A-98F4-BCFC461329DE](https://github.com/user-attachments/assets/bf35a7da-7ed6-438f-8afc-41d704eb19de)
+![simulator_screenshot_158493EA-FAFC-43EF-B0E1-3928155CA7E6](https://github.com/user-attachments/assets/4ccd8915-cb49-4a14-b698-72ba2d05c4d7)
+
 
 ### Pantalla de Perfil
 ![simulator_screenshot_95ADAF2C-0792-4E8E-9B7C-E38AC9436BF9](https://github.com/user-attachments/assets/6547d05f-a59d-4dfc-b329-2acfcc52bd0a)
