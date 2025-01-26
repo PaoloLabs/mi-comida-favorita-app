@@ -131,6 +131,10 @@ Una vez iniciada la app tienes un menu donde puedes escoger la plataforma que qu
 - expo-image-picker
 - expo-image-manipulator
 
+## A considerar
+
+- Para el caso de imagenes no pudimos usar firebase/storage por que no es posible con el plan gratuito pero fue posible haciendo compresion de imagenes con firestore.
+
 ## Capturas de Pantalla
 
 ### Pantalla de Inicio de Sesión
