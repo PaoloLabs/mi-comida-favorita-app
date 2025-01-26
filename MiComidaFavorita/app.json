@@ -23,6 +23,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photoCameraPermission": "La aplicación necesita acceso a la cámara para tomar fotos de perfil.",
+          "mediaLibraryPermission": "La aplicación necesita acceso a tus fotos para seleccionar una imagen de perfil."
+        }
+      ]
+    ]
   }
 }

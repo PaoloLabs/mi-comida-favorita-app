@@ -8,8 +8,8 @@ import { commonStyles } from '../styles/CommonStyles';
 import { LoadingOverlay } from '../components/LoadingOverlay';
 
 export default function LoginScreen({ navigation }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('user.test@xyz.com');
+    const [password, setPassword] = useState('123456');
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
