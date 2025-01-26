@@ -55,3 +55,6 @@ ios/Podfile.lock
 *.swo
 *.swn
 *.bak
+
+# firebase.js
+src/config/firebase.js
