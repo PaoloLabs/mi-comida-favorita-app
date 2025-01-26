@@ -57,4 +57,4 @@ ios/Podfile.lock
 *.bak
 
 # firebase.js
-src/config/firebase.js
+MiComidaFavorita/src/config/firebase.js
